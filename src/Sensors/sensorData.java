@@ -1,6 +1,5 @@
 package Sensors;
 
-public interface sensorData 
+interface SensorData 
 {
-	public void setPosition(double latitude, double longetude);
 }

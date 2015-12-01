@@ -2,94 +2,41 @@ package Sensors;
 
 import org.json.JSONObject;
 
-import Exceptions.NoSuchSubstanceCategoryException;
-
-public class AP2CEdata implements sensorData 
+public class AP2CeData implements SensorData 
 { 
-	private JSONObject dataList;
+	public final int gBarCount;
+	public final int hBarCount;
+	public final boolean hydrogenTankEmpty;
+	public final boolean deviceFault;
+	public final boolean detectorReady;
+	public final boolean purge;
+	public final boolean batteryLow;
 	
-	public AP2CEdata(JSONObject JSONObject)
+	public AP2CeData(JSONObject json)
 	{
-		dataList = JSONObject;
+		hBarCount = returnData("BarCount", "G", json);
+		gBarCount = returnData("BarCount", "H", json);
+		
+		JSONObject state = json.getJSONObject("State");
+		hydrogenTankEmpty = state.getBoolean("HydrogenTankEmpty");
+		deviceFault = state.getBoolean("DeviceFault");
+		detectorReady = state.getBoolean("DetectorReady");
+		purge = state.getBoolean("Purge");
+		batteryLow = state.getBoolean("BatteryLow");
 	}
 	
-	private int returnData(String dataName, String substanceCategory) throws NoSuchSubstanceCategoryException {
-		if(dataList.getJSONArray("Data").getJSONObject(0).getString("SubstanceCategory").equals(substanceCategory))
+	private int returnData(String dataName, String substanceCategory, JSONObject json) {
+		if(json.getJSONArray("Data").getJSONObject(0).getString("SubstanceCategory").equals(substanceCategory))
 		{
-			return dataList.getJSONArray("Data").getJSONObject(0).getInt(dataName);
+			return json.getJSONArray("Data").getJSONObject(0).getInt(dataName);
 		}
-		else if(dataList.getJSONArray("Data").length() == 2)
+		else if(json.getJSONArray("Data").length() == 2)
 		{
-			if(dataList.getJSONArray("Data").getJSONObject(1).getString("SubstanceCategory").equals(substanceCategory))
+			if(json.getJSONArray("Data").getJSONObject(1).getString("SubstanceCategory").equals(substanceCategory))
 			{
-				return dataList.getJSONArray("Data").getJSONObject(1).getInt(dataName);
+				return json.getJSONArray("Data").getJSONObject(1).getInt(dataName);
 			}
 		}
-		throw new NoSuchSubstanceCategoryException();
-	}
-	
-	public int get_gBarCount() throws NoSuchSubstanceCategoryException
-	{
-		return returnData("BarCount", "G");
-	}
-
-	
-	
-	public int get_gVolumeConcentration() throws NoSuchSubstanceCategoryException
-	{
-		return returnData("VolumeConcentration", "G");
-	}
-	
-	public int get_hBarCount() throws NoSuchSubstanceCategoryException
-	{
-		return returnData("BarCount", "H");
-	}
-	
-	public int get_hVolumeConcentration() throws NoSuchSubstanceCategoryException
-	{
-		return returnData("VolumeConcentration", "H");
-	}
-	
-	public boolean is_HydrogenTankEmpty()
-	{
-		return dataList.getJSONObject("State").getBoolean("HydrogenTankEmpty");
-	}
-	
-	public boolean is_DeviceFault()
-	{
-		return dataList.getJSONObject("State").getBoolean("DeviceFault");
-	}
-	
-	public boolean is_DetectorReady()
-	{
-		return dataList.getJSONObject("State").getBoolean("DetectorReady");
-	}
-	
-	public boolean is_Purge()
-	{
-		return dataList.getJSONObject("State").getBoolean("Purge");
-	}
-	
-	public boolean is_BatteryLow()
-	{
-		return dataList.getJSONObject("State").getBoolean("BatteryLow");
-	}
-
-	@Override
-	public void setPosition(double latitude, double longitude) 
-	{
-		dataList.remove("Position");
-		JSONObject obj = new JSONObject("{"
-				+ "		\"Altitude\": 0,"
-				+ "		\"Latitude\": " + latitude + ","
-				+ "		\"Longitude\": " + longitude
-				+ "}");
-		dataList.put("Position", obj);
-	}
-	
-	@Override
-	public String toString()
-	{
-		return dataList.toString();
+		return 0;
 	}
 }

@@ -1,33 +1,62 @@
 package Sensors;
-import Exceptions.NoSessionInProgressException;
+import Exceptions.ConnectionFailedException;
+import Exceptions.NoSuchSimulationException;
 import HttpClient.HttpClient;
 
-public abstract class Sensor 
+abstract class Sensor 
 {
-	protected String urlPath;
+	protected String sensorPath;
 	protected String sessionID;
 	protected HttpClient connection;
 
-	public Sensor(String hostname, String urlPath)
+	/**
+	 * @param uri - server uri
+	 * @param sensorPath - sensor subpath (example: sensor/lcd)
+	 */
+	public Sensor(String uri, String sensorPath)
 	{
-		this.connection = new HttpClient(hostname);
-		this.urlPath = urlPath;
+		this.connection = new HttpClient(uri);
+		this.sensorPath = sensorPath;
 	}
 	
-	public abstract void getData() throws Exception;
+	/** Gets sensor data from server
+	 * @return a data object holding all values belonging to the sensor
+	 * @throws ConnectionFailedException if a connection to the server was not established
+	 * @throws NoSuchSimulationException if this object is not associated with a sensor on the server
+	 */
+	public abstract SensorData fetchData() throws ConnectionFailedException, NoSuchSimulationException;
 	
-	public abstract void updatePosition(double longitude, double latitude) throws Exception;
+	/** Update the sensors position (sends data to server)
+	 * @param longitude
+	 * @param latitude
+	 * @throws ConnectionFailedException if a connection to the server was not established
+	 * @throws NoSuchSimulationException if this object is not associated with a sensor on the server
+	 */
+	public abstract void updatePosition(double longitude, double latitude) throws ConnectionFailedException, NoSuchSimulationException;
 
-	public void startSimulation() throws Exception 
+	/** Start the simulation of the sensor on the server
+	 * @param longitude initial position
+	 * @param latitude  initial position
+	 * @throws ConnectionFailedException if a connection to the server was not established
+	 */
+	public void startSimulation(double longitude, double latitude) throws ConnectionFailedException 
 	{
-		sessionID = connection.sendPOST(urlPath);
+		sessionID = connection.sendPOST(sensorPath);
+		// Ghetto fix - should send position above
+		try {
+			updatePosition(longitude, latitude);
+		} catch (NoSuchSimulationException e) {}
 	}
 	
-	public void endSimulation() throws Exception 
+	/** Stop the simulation of the sensor on the server
+	 * @throws ConnectionFailedException if a connection to the server was not established
+	 * @throws NoSuchSimulationException if this object is not associated with a sensor on the server
+	 */
+	public void endSimulation() throws ConnectionFailedException, NoSuchSimulationException
 	{
-		if(sessionID == null) throw new NoSessionInProgressException();
+		if(sessionID == null) throw new NoSuchSimulationException();
 		
-		connection.sendDELETE(urlPath + "/" + sessionID);
+		connection.sendDELETE(sensorPath + "/" + sessionID);
 		sessionID = null;
 	}
 }
