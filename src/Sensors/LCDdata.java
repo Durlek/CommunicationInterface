@@ -78,16 +78,19 @@ public class LCDData implements SensorData
 	private int returnData(String dataName, String substanceCategory, JSONObject json) 
 	{
 		JSONArray data = json.getJSONArray("Data");
+		
+		if (data.length() == 0) return 0;
+		
 		if(data.getJSONObject(0).getString("SubstanceCategory").equals(substanceCategory))
 		{
 			return data.getJSONObject(0).getInt(dataName);
 		}
-		else if(data.length() == 2)
+
+		if(data.length() == 1) return 0;
+			
+		if(data.getJSONObject(1).getString("SubstanceCategory").equals(substanceCategory))
 		{
-			if(data.getJSONObject(1).getString("SubstanceCategory").equals(substanceCategory))
-			{
-				return data.getJSONObject(1).getInt(dataName);
-			}
+			return data.getJSONObject(1).getInt(dataName);
 		}
 		
 		return 0;

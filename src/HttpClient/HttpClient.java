@@ -19,12 +19,17 @@ public class HttpClient
 	
 	public HttpClient(String uri)
 	{
-		this.uri = uri;
+		setUri(uri);
 	}
 
 	public void setUri(String uri)
 	{
-		this.uri = uri;
+		// Ghetto fix - "http://" and "" throws different exceptions
+		if (uri.trim().equals("http://") || uri.trim().equals("https://")) {
+			this.uri = "";
+		} else {
+			this.uri = uri;	
+		}
 	}
 
 	public String getUri()
@@ -114,9 +119,12 @@ public class HttpClient
 		{
 			URL url = new URL(uri + "/" + urlParam);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setRequestProperty( "Content-Type", "application/json" );
 			con.setRequestMethod("POST");
 			
 			con.setDoOutput(true);
+			
+			con.connect();
 			
 			OutputStreamWriter sendData = new OutputStreamWriter(con.getOutputStream());
 			sendData.write(jsonEvent);

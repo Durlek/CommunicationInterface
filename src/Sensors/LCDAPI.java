@@ -31,11 +31,11 @@ public class LCDAPI extends Sensor
 	public void nvgToggle() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"nvg toggle\","
-				+ " \"sensor\": \"lcd\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"nvg toggle\","
+				+ " \"Sensor\": \"lcd\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/** Sends a 'AUDIBLE ALARM TOGGLE' event to the server
@@ -45,11 +45,11 @@ public class LCDAPI extends Sensor
 	public void audibleAlarmToggle() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"alarm toggle\","
-				+ " \"sensor\": \"lcd\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"audible alarm toggle\","
+				+ " \"Sensor\": \"lcd\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/** Sends a 'silent current alarm' event to the server
@@ -59,11 +59,11 @@ public class LCDAPI extends Sensor
 	public void silenceAlarm() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"silent current alarm\","
-				+ " \"sensor\": \"lcd\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"silent current alarm\","
+				+ " \"Sensor\": \"lcd\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/** Sends a 'reset sieve pack timer' event to the server
@@ -73,11 +73,11 @@ public class LCDAPI extends Sensor
 	public void resetSievPackTimer() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"reset sieve pack timer\","
-				+ " \"sensor\": \"lcd\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"reset sieve pack timer\","
+				+ " \"Sensor\": \"lcd\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/** Sends a 'restart' event to the server
@@ -87,11 +87,11 @@ public class LCDAPI extends Sensor
 	public void restart() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"restart\","
-				+ " \"sensor\": \"lcd\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"restart\","
+				+ " \"Sensor\": \"lcd\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/**

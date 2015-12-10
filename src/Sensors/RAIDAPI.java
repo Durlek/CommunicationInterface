@@ -25,11 +25,11 @@ public class RAIDAPI extends Sensor
 	public void toggleLib() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"toggle lib\","
-				+ " \"sensor\": \"raid\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"toggle lib\","
+				+ " \"Sensor\": \"raid\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/** Sends a 'stop/start' event to the server
@@ -39,11 +39,11 @@ public class RAIDAPI extends Sensor
 	public void toggleStartStop() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"stop/start\","
-				+ " \"sensor\": \"raid\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"stop/start\","
+				+ " \"Sensor\": \"raid\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/** Sends a 'cleaning on' event to the server
@@ -53,11 +53,11 @@ public class RAIDAPI extends Sensor
 	public void cleaningOn() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"cleaning on\","
-				+ " \"sensor\": \"raid\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"cleaning on\","
+				+ " \"Sensor\": \"raid\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 	/** Sends a 'cleaning off' event to the server
@@ -67,11 +67,11 @@ public class RAIDAPI extends Sensor
 	public void cleaningOff() throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"
-				+ " \"command\": \"cleaning off\","
-				+ " \"sensor\": \"raid\","
-				+ " \"id\": \"" + sessionID + "\""
+				+ " \"Command\": \"cleaning off\","
+				+ " \"Sensor\": \"raid\","
+				+ " \"Id\": \"" + sessionID + "\""
 				+ "}";
-		connection.sendPOSTEvent(sensorPath, jsonEvent);
+		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
 }
