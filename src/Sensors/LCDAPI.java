@@ -105,7 +105,6 @@ public class LCDAPI extends Sensor
 		connection.sendPUT(sensorPath + "/" + sessionID, "{\"DetectionMode\": " + mode + "}");
 	}
 	
-
 	public void updatePosition(double longitude, double latitude) throws ConnectionFailedException, NoSuchSimulationException
 	{
 		StringBuilder sb = new StringBuilder();

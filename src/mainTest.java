@@ -1,6 +1,6 @@
 import HttpClient.HttpClient;
+import Sensors.AP2CEData;
 import Sensors.AP2CeAPI;
-import Sensors.AP2CeData;
 import Sensors.LCDAPI;
 import Sensors.LCDData;
 
@@ -81,7 +81,7 @@ public class mainTest {
 			System.out.println("START TEST AP2C");
 			AP2CeAPI AP2CTest = new AP2CeAPI(hostname);
 			AP2CTest.startSimulation(2, 2);
-			AP2CeData adata = AP2CTest.fetchData();
+			AP2CEData adata = AP2CTest.fetchData();
 			
 			System.out.println(adata.batteryLow);
 			AP2CTest.updatePosition(1, 2);

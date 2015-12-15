@@ -9,7 +9,7 @@ public abstract class Sensor
 	protected String sessionID;
 	protected HttpClient connection;
 
-	/**
+	/** Constructor
 	 * @param uri - server uri
 	 * @param sensorPath - sensor subpath (example: sensor/lcd)
 	 */
@@ -19,11 +19,16 @@ public abstract class Sensor
 		this.sensorPath = sensorPath;
 	}
 
+	/** Sets uri on the httpClient
+	 * @param uri - server uri
+	 */
 	public void setUri(String uri)
 	{
 		this.connection.setUri(uri);
 	}
 
+	/** Gets uri from the httpClient
+	 */
 	public String getUri()
 	{
 		return this.connection.getUri();

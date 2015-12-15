@@ -31,6 +31,10 @@ public class I28API extends Sensor
 		connection.sendPOSTEvent("sensors/event", jsonEvent);
 	}
 	
+	/** Sends a 'reset peak dose rate' event to the server
+	 * @throws ConnectionFailedException if a connection to the server was not established
+	 * @throws NoSuchSimulationException if this object is not associated with a sensor on the server
+	 */
 	public void resetPeakDoseRate()  throws ConnectionFailedException, NoSuchSimulationException
 	{
 		String jsonEvent = "{"

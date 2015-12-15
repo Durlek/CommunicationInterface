@@ -12,9 +12,9 @@ public class AP2CeAPI extends Sensor
 	}
 	
 	@Override
-	public AP2CeData fetchData() throws ConnectionFailedException, NoSuchSimulationException
+	public AP2CEData fetchData() throws ConnectionFailedException, NoSuchSimulationException
 	{	
 		if(sessionID == null) throw new NoSuchSimulationException();
-		return new AP2CeData(super.connection.sendGET(sensorPath + "/" + sessionID));
+		return new AP2CEData(super.connection.sendGET(sensorPath + "/" + sessionID));
 	}
 }
